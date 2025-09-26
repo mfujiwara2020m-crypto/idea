@@ -11,14 +11,15 @@
 </head>
 
 <body style="margin:0px; overflow:hidden;">
-    
     <a-scene embedded 
-        arjs='sourceType: webcam; 
-              detectionMode: mono; 
-              cameraParametersUrl: https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/camera-parameters/camera_para.dat;'>
+        arjs='...'
         
+        <a-assets>
+            <img id="myImage" src="original.png">
+        </a-assets>
+
         <a-marker preset='hiro'>
-           <a-image src="original.png" position="0 2 -3"></a-image>
+            <a-image src="#myImage" position="0 0 0" width="1" height="1"></a-image>
         </a-marker>
         
         <a-entity camera></a-entity>
@@ -26,6 +27,7 @@
     </a-scene>
 </body>
 </html>
+
 
 
 
