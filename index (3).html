@@ -1,77 +1,86 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>A-Frame Zoom & Hop Character</title>
+    <title>AR.js with A-Frame Zoom & Hop</title>
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    
+    <style>
+        /* AR表示のため、Webカメラの映像をフルスクリーンで表示するためのスタイル */
+        .a-canvas {
+            margin: 0;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
-<body>
-    <a-scene>
-        <a-assets>
-            <img id="handwritten-char" src="original.png"> 
-        </a-assets>
-
-        <a-plane 
-            id="character" 
-            src="#handwritten-char" 
-            position="0 1.5 -3" 
-            rotation="0 0 0" 
-            width="2" 
-            height="2"
-            cursor-listener> 
-            <a-animation 
-                id="zoom-in-anim"
-                attribute="scale" 
-                to="1.5 1.5 1.5"             dur="500"                    easing="easeOutQuad"
-                begin="mouseenter"           end="zoom-in-complete"       fill="forwards">
-            </a-animation>
-
-            <a-animation 
-                id="hop-anim"
-                attribute="position" 
-                to="0 1.8 -3"                dur="200"                    direction="alternate"        repeat="2"                   easing="easeInOutQuad"
-                begin="zoom-in-complete"     end="hop-complete">
-            </a-animation>
-
-            <a-animation 
-                id="zoom-out-anim"
-                attribute="scale" 
-                to="1 1 1"                    dur="300"
-                easing="easeOutQuad"
-                begin="hop-complete"          fill="forwards">
-            </a-animation>
-
-            <a-animation 
-                id="reset-pos-anim"
-                attribute="position" 
-                to="0 1.5 -3"                 dur="300"
-                easing="easeOutQuad"
-                begin="mouseleave"            fill="forwards">
-            </a-animation>
-
-        </a-plane>
-
-        <a-camera position="0 1.6 0">
-            <a-cursor></a-cursor>
-        </a-camera>
-
-        <a-sky color="#ECECEC"></a-sky>
-        <a-plane position="0 0 -4" rotation="-90 0 0" width="10" height="10" color="#7BC8A4"></a-plane>
+<body style="margin: 0; overflow: hidden;">
+    
+    <a-scene 
+        embedded 
+        arjs='sourceType: webcam; detectionMode: mono; cameraParametersUrl: https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/camera-parameters/camera_para.dat;'>
+        
+        <a-marker preset='hiro'>
+            <a-entity>
+                <a-plane 
+                    id="character" 
+                    src="character-image.png" position="0 0.02 0"         rotation="-90 0 0"          width="1" 
+                    height="1"
+                    cursor-listener> 
+                    
+                    <a-animation 
+                        id="zoom-in-anim"
+                        attribute="scale" 
+                        to="1.5 1.5 1.5" 
+                        dur="500"                    
+                        easing="easeOutQuad"
+                        begin="click"           end="zoom-in-complete"      
+                        fill="forwards">
+                    </a-animation>
+                    
+                    <a-animation 
+                        id="hop-anim"
+                        attribute="position" 
+                        to="0 0.5 0"                dur="200"                    
+                        direction="alternate"        
+                        repeat="2"                   
+                        easing="easeInOutQuad"
+                        begin="zoom-in-complete"     
+                        end="hop-complete">
+                    </a-animation>
+                    
+                    <a-animation 
+                        id="zoom-out-anim"
+                        attribute="scale" 
+                        to="1 1 1"                    
+                        dur="300"
+                        easing="easeOutQuad"
+                        begin="hop-complete"          
+                        fill="forwards">
+                    </a-animation>
+                </a-plane>
+            </a-entity>
+        </a-marker>
+        
+        <a-entity camera></a-entity>
     </a-scene>
     
     <script>
-        // カスタムイベントをトリガーするためのJavaScript
+        // アニメーションのシーケンスを制御するJavaScript (元のコードと同じロジック)
         document.addEventListener('DOMContentLoaded', function () {
             const character = document.getElementById('character');
             
-            // ズームイン完了時に 'zoom-in-complete' イベントを発火
-            character.components.animation.zoom-in-anim.onend = function() {
-                character.emit('zoom-in-complete');
-            };
-            
-            // ホップ完了時に 'hop-complete' イベントを発火
-            character.components.animation.hop-anim.onend = function() {
-                character.emit('hop-complete');
-            };
+            // スケールアニメーションの完了イベントハンドラを設定
+            character.addEventListener('animationcomplete', function(event) {
+                if (event.detail.name === 'animation__zoom-in-anim') {
+                    // ズームイン完了後、ホップアニメーションを開始
+                    character.emit('zoom-in-complete');
+                } else if (event.detail.name === 'animation__hop-anim') {
+                    // ホップ完了後、ズームアウトアニメーションを開始
+                    character.emit('hop-complete');
+                }
+            });
         });
     </script>
 </body>
