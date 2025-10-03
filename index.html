@@ -10,27 +10,32 @@
 
   <body style="margin:0px; overflow:hidden;">
     <a-scene embedded arjs>
-     <!-- 画像背景 --> <a-sky src="test.jpg"></a-sky> 
         <a-assets>
                         <img id="myImage" src="original2.png">
+             <img id="newImage" src="test.png"> 
         </a-assets>
 
                 <a-marker preset="hiro">
                         <a-image src="#myImage" 
                      position="0 0.5 0" scale="1 -1 1"
                      width="30">
+                              <a-image src="#newImage" 
+                     position="0 0.5 0" scale="1 -1 1"
+                     width="30">
             </a-image>
+                     
  <!-- テキストの挿入 -->
       <a-text position="-0.5 2 -3" value=" Welcome to " color="purple" width="10"></a-text>
   
       <a-text position="0 1 -3" value=" SANOTECH  " color="purple" width="10"></a-text>
-                <a-text position="-0.5 0 -3" value=" NIGHT " color="purple" width="10"></a-text>
+                <a-text position="0.5 0 -3" value=" NIGHT " color="purple" width="10"></a-text>
                 </a-marker>
         
                 <a-entity camera></a-entity>
     </a-scene>
   </body>
 </html>
+
 
 
 
