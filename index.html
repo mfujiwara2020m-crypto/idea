@@ -1,102 +1,31 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">
-    <title>marker AR</title>
-    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-  </head>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">
+    <title>marker AR</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  </head>
 
-  <body style="margin:0px; overflow:hidden;">
-    <a-scene embedded arjs>
-        <a-assets>
-             <img id="myImage" src="original2.png">
+  <body style="margin:0px; overflow:hidden;">
+    <a-scene embedded arjs>
+        <a-assets>
+             <img id="myImage" src="original2.png">
            <img id="newImage" src="test.jpg">
-        </a-assets>
+        </a-assets>
 
-              <a-marker preset="hiro">
-    <a-image src="#myImage" position="0.5 1.8 -2" width="1" height="1"></a-image> 
-    <a-image src="#newImage" position="0 1.8 -3.5"  width="6" height="6"></a-image>
+        <a-marker preset="hiro">
+            <a-image src="#myImage" position="0.5 1.8 -2" width="1" height="1"></a-image> 
+            </a-marker>
+        
+        <a-image src="#newImage" position="0 1.8 -3.5"  width="6" height="6"></a-image>
+        <a-text position="-0.5 1.5 0" value=" Welcome to " color="purple" width="5"></a-text>
+        <a-text position="-0.5 1 0" value=" Sano　Tech " color="purple" width="5"></a-text>
+        <a-text position="-0.5 0.5 0" value=" NIGHT " color="purple" width="5"></a-text>
 
-    <a-text position="-0.5 1.5 0" value=" Welcome to " color="purple" width="5"></a-text>
-<a-text position="-0.5 1 0" value=" Sanotech " color="purple" width="5"></a-text>
-                         <a-text position="-0.5 0.5 0" value=" NIGHT " color="purple" width="5"></a-text>
-</a-marker>
-        
-                <a-entity camera></a-entity>
-    </a-scene>
-  </body>
+        
+        <a-entity camera></a-entity>
+    </a-scene>
+  </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
